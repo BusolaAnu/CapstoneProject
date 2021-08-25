@@ -19,22 +19,20 @@ To set up this project,
 ## Dataset
 
 ### Overview
-*TODO*: Explain about the data you are using and where you got it from.
 The data used in this project is the Heart falure dataset available on kaggle. The dataset contains 12 features that can be used to predict mortality by heart failure.
 These features includes behavioural lifestyles that could increase the risk of heart failure such as tobacco use, unhealthy diet and obesity, physical inactivity and harmful use of alcohol. 
 
 ### Task
-*TODO*: Explain the task you are going to be solving with this dataset and the features you will be using for it.
 The heart failure dataset will be used to build a classification model to predict either an occurence of death(1) or not(0) based on the following features: 
 age, anaemia, creatinine_phosphokinase, diabetes,	ejection_fraction,	high_blood_pressure,	platelets	serum_creatinine,	serum_sodium,	sex,	smoking and time
 
 
 ### Access
-*TODO*: Explain how you are accessing the data in your workspace.
-A link to the dataset is provided in the notebook and it was accessed using the tabular datafactory function
+
+A link to the dataset is provided in the notebook and it was accessed using the tabulardatasetfactory function
 
 ## Automated ML
-*TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
+
 This project is a classification task and accuracy was used as the primary metric, number of cross validation was set to 5.
 The detailed settings used are in screenshot below:
 
@@ -42,7 +40,6 @@ The detailed settings used are in screenshot below:
 
 
 ### Results
-*TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
 
 *TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
 The best model was votingEsemble which is a combination of other good performing models with an accuracy of 0.8791
