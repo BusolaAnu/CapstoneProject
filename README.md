@@ -6,12 +6,11 @@ In this project, two models were created one using Automated ML and the other a 
 ## Project Set Up and Installation
 To set up this project,
 1. Create a compute instance in AzureML studio
-2. Provide a link to your dataset or resgister your dataset on AzureML
-3. Model Building:
-  AutoML
+2. Provide a link to your dataset or register your dataset on AzureML
+3. Model Building (AutoML):
     1. Set up AutoML configuration
     2. Run the AutoML configuration and get your best model and best run
-  Hyperdrive 
+4. Model Building (Hyperdrive):
     1. Set up Hyperdrive configuration
     2. Run the Hyperdrive configuration and save your best model and best run
 4. Model Deployment: Deploy your best model as a webservice
