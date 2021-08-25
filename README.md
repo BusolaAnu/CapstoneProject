@@ -1,10 +1,9 @@
 *NOTE:* This file is a template that you can use to create the README for your project. The *TODO* comments below will highlight the information you should be sure to include.
 
-# Your Project Title Here
-Capstone Project for Nanodegree program on Udacity. In this project, two models was created one using Automated ML and the other a customized model whose hyperparameters are tuned using HyperDrive on an external dataset.
+# Capstone Project - Azure Machine Learning Engineer Nanodegree program
+In this project, two models were created one using Automated ML and the other a customized model whose hyperparameters are tuned using HyperDrive on an external dataset.
 
 ## Project Set Up and Installation
-*OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
 To set up this project,
 1. Create a compute instance in AzureML studio
 2. Provide a link to your dataset or resgister your dataset on AzureML
@@ -37,23 +36,113 @@ A link to the dataset is provided in the notebook and it was accessed using the 
 
 ## Automated ML
 *TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
+This project is a classification task and accuracy was used as the primary metric, number of cross validation was set to 5.
+The detailed settings used are in screenshot below:
+
+![image](https://user-images.githubusercontent.com/86358182/130730662-babee264-7636-4bf3-8be8-09bae7550650.png)
+
 
 ### Results
 *TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
 
 *TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+The best model was votingEsemble which is a combination of other good performing models with an accuracy of 0.8791
+
+![image](https://user-images.githubusercontent.com/86358182/130728824-f830a3dc-e370-4cfb-bd36-512f5aa04cf4.png)
+
+Parameters of the best model
+
+![image](https://user-images.githubusercontent.com/86358182/130730344-a313a0f6-965f-41db-b3be-411c6ae33224.png)
+
+Picture of the RunDetails widget
+
 
 ## Hyperparameter Tuning
 *TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
 
+Considering the simplisity of this dataset, Logistic regression was used for the hyperparameter tuning because it provides good accuracy and it is less inclined to overfitting especially with low dimentional dataset like this (299 rows x 12 columns).
 
 ### Results
 *TODO*: What are the results you got with your model? What were the parameters of the model? How could you have improved it?
+
+![image](https://user-images.githubusercontent.com/86358182/130732165-604d530e-730f-4c58-9f10-c67d1225ccb7.png)
+
+![image](https://user-images.githubusercontent.com/86358182/130731918-45a15646-23f7-4917-b7c2-bafbab4ca221.png)
+
+![image](https://user-images.githubusercontent.com/86358182/130732251-3f5024f2-610a-4a3f-a21b-6837d7eb4484.png)
+
 
 *TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
 
 ## Model Deployment
 *TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
+The AutoML Model was deployed as a webservice using ACI webservice because it performed better on the test set.
+
+![image](https://user-images.githubusercontent.com/86358182/130732464-a01c8947-a8f7-4403-a757-3af0d263b124.png)
+![image](https://user-images.githubusercontent.com/86358182/130732497-5b3a2dec-be42-422d-be99-89c9c50614bb.png)
+
+![image](https://user-images.githubusercontent.com/86358182/130732526-b0200994-a15c-4604-b261-e7dd1182e3f3.png)
+Sample call to the endoint
+
+To query the endpoint, here is a sample data;
+
+import requests
+
+import json
+
+scoring_uri = "http://d1828af7-0fb5-486d-841c-35c5fca55847.southcentralus.azurecontainer.io/score"
+
+key = "DxnlfpGm3Kaa58RVTic9eE6c9XLczhJe"
+
+data = {
+    "data": [
+    
+        {
+        "age":75.0,
+"anaemia":0,
+"creatinine_phosphokinase": 582,
+"diabetes":0,
+"ejection_fraction":20,
+"high_blood_pressure":1,
+"platelets":265000.00,
+"serum_creatinine":1.9,
+"serum_sodium":130,
+"sex":1,
+"smoking":0,
+"time":4                       
+            },
+        {
+        "age":55.0,
+"anaemia":0,
+"creatinine_phosphokinase": 7861,
+"diabetes":0,
+"ejection_fraction":38,
+"high_blood_pressure":0,
+"platelets":263358.03,
+"serum_creatinine":1.1,
+"serum_sodium":136,
+"sex":1,
+"smoking":0,
+"time":6   
+        
+            },
+        ]
+    }
+
+
+input_data = json.dumps(data)
+with open("data.json", "w") as _f:
+    _f.write(input_data)
+
+
+headers = {"Content-Type": "application/json"}
+
+headers["Authorization"] = f"Bearer {key}"
+
+
+resp = requests.post(scoring_uri, input_data, headers=headers)
+print(resp.json())
+
 
 ## Screen Recording
 *TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
